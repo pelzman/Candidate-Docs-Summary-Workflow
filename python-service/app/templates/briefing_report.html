@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header>
+    <h1>{{ title }}</h1>
+    <p><strong>Analyst:</strong> {{ analyst_name }}</p>
+</header>
+
+<section class="company-info">
+    <h2>Company Overview</h2>
+    <p><strong>Name:</strong> {{ company_name }}</p>
+    <p><strong>Ticker:</strong> {{ ticker }}</p>
+    <p><strong>Sector:</strong> {{ sector }}</p>
+</section>
+
+<section class="executive-summary">
+    <h2>Executive Summary</h2>
+    <p>{{ summary }}</p>
+</section>
+
+<section class="key-points">
+    <h2>Key Points</h2>
+    <ul>
+        {% for point in key_points %}
+        <li>{{ point }}</li>
+        {% endfor %}
+    </ul>
+</section>
+
+<section class="risks">
+    <h2>Risks</h2>
+    <ul>
+        {% for risk in risks %}
+        <li>{{ risk }}</li>
+        {% endfor %}
+    </ul>
+</section>
+
+<section class="recommendation">
+    <h2>Recommendation</h2>
+    <p>{{ recommendation }}</p>
+</section>
+
+{% if metrics %}
+<section class="metrics">
+    <h2>Metrics</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for metric in metrics %}
+            <tr>
+                <td>{{ metric.name }}</td>
+                <td>{{ metric.value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endif %}
+{% endblock %}

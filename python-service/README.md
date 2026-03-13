@@ -1,96 +1,55 @@
-# InsightOps Python Service Starter
+# Python Service (Part A) - Mini Briefing Report Generator
 
-FastAPI starter service for the backend assessment.
+FastAPI backend service for generating briefing reports, built over the InsightOps starter project.
 
-This service includes:
+## 1. Public GitHub Repository
+[Link to Repository (Placeholder)](#)
 
-- FastAPI app bootstrap and health endpoint
-- SQLAlchemy wiring
-- Manual SQL migration runner
-- One small `sample_items` example feature
-- Jinja template wiring with a minimal base template
-- Pytest setup
+## 2. Setup Instructions & Running the Service
 
-The assessment-specific briefing features are intentionally not implemented.
-
-## Prerequisites
-
+### Prerequisites
+- Docker
 - Python 3.12
-- PostgreSQL running from repository root:
 
+### Start PostgreSQL Database
+From the repository root, start the shared Postgres container:
 ```bash
 docker compose up -d postgres
 ```
+*(Runs on `localhost:5432` with user `assessment_user`, password `assessment_pass`, db `assessment_db`)*
 
-## Setup
-
+### Setup Python Environment
 ```bash
 cd python-service
 python3.12 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
+# On Windows: .\.venv\Scripts\activate
+# On Unix/macOS: source .venv/bin/activate
+pip install -r requirements.txt
 cp .env.example .env
 ```
 
-## Environment
-
-`.env.example` includes:
-
-- `DATABASE_URL`
-- `APP_ENV`
-- `APP_PORT`
-
-## Run Migrations (Manual SQL Runner)
-
-Apply pending migrations:
-
+### Run Migrations
+Apply the database schemas for briefings, key points, risks, and metrics:
 ```bash
-cd python-service
-source .venv/bin/activate
 python -m app.db.run_migrations up
 ```
 
-Roll back the latest migration:
-
+### Run Service
+Start the FastAPI server:
 ```bash
-cd python-service
-source .venv/bin/activate
-python -m app.db.run_migrations down --steps 1
-```
-
-How it works:
-
-- SQL files live in `python-service/db/migrations/`
-- A `schema_migrations` table tracks applied filenames
-- Up files are applied in sorted filename order (`*.sql` or `*.up.sql`)
-- Rollback uses a paired `*.down.sql` file for each applied migration
-- Applied migration files are skipped on subsequent runs
-
-## Run Service
-
-```bash
-cd python-service
-source .venv/bin/activate
 python -m uvicorn app.main:app --reload --port 8000
 ```
+The API will be available at `http://localhost:8000/briefings`.
 
-## Run Tests
-
+### Run Tests
+Tests utilize an in-memory SQLite database and test the full API flow.
 ```bash
-cd python-service
-source .venv/bin/activate
-python -m pytest
+python -m pytest tests/
 ```
 
-## Project Layout
+### Assumptions and Tradeoffs
+- **HTML Rendering**: Assumed that basic inline/internal CSS was sufficient for the HTML report generation without needing an external asset pipeline.
+- **SQLite vs Postgres**: Set up a SQLite mock for `gen_random_uuid()` in tests to allow fast test execution without requiring a live Postgres instance for CI/CD checks.
 
-- `app/main.py`: FastAPI bootstrap and router wiring
-- `app/config.py`: environment config
-- `app/db/`: SQLAlchemy session management and migration runner
-- `db/migrations/`: SQL migration files
-- `app/models/`: ORM models
-- `app/schemas/`: Pydantic request/response schemas
-- `app/services/`: service-layer logic and template helpers
-- `app/api/`: route handlers
-- `app/templates/`: Jinja templates
-- `tests/`: test suite
+## 3. Notes
+See [NOTES.md](./NOTES.md) for design decisions, schema decisions, and future improvements.
