@@ -3,7 +3,7 @@
 NestJS backend service for candidate document upload and AI-powered summary generation.
 
 ## 1. Public GitHub Repository
-[Link to Repository (Placeholder)](#)
+[Link to Repository (https://github.com/pelzman/Candidate-Docs-Summary-Workflow)](#)
 
 ## 2. Setup Instructions & Running the Service
 

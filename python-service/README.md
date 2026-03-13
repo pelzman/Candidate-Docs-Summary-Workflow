@@ -3,7 +3,7 @@
 FastAPI backend service for generating briefing reports, built over the InsightOps starter project.
 
 ## 1. Public GitHub Repository
-[Link to Repository (Placeholder)](#)
+[Link to Repository (https://github.com/pelzman/Candidate-Docs-Summary-Workflow)](#)
 
 ## 2. Setup Instructions & Running the Service
 
